@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from models import Book
 from models import User
+from models import Basic_User
 
 
 class Basic_UserSerializer(serializers.Serializer):
@@ -16,6 +17,9 @@ class Basic_UserSerializer(serializers.Serializer):
     last_name = serializers.CharField(required=False, max_length=200)
     email = serializers.CharField(required=False, max_length=200)
     phone = serializers.CharField(required=False, max_length=15)
+    string_home_address = serializers.CharField(required=False, max_length=200)
+    string_office_address = serializers.CharField(required=False, max_length=200)
+    qbuserid = serializers.CharField(required=False, max_length=200)
     
 
     def restore_object(self, attrs, instance=None):
@@ -31,21 +35,26 @@ class Basic_UserSerializer(serializers.Serializer):
             instance.last_name= attrs.get('last_name', instance.last_name)
             instance.email= attrs.get('email', instance.email)
             instance.phone= attrs.get('phone', instance.phone)
+            instance.string_home_address= attrs.get('string_home_address', instance.string_home_address)
+            instance.string_office_address= attrs.get('string_office_address', instance.string_office_address)
+            instance.qbuserid= attrs.get('qbuserid', instance.qbuserid)
             return instance
 
-        return Basic_User(attrs.get('first_name'),attrs.get('last_name'),attrs.get('email'),attrs.get('phone'),attrs.get('user_name'),attrs.get('home_longitude'),attrs.get('home_latitude'),attrs.get('office_longitude'),attrs.get('office_latitude'),attrs.get('rent_price'),attrs.get('sell_price'))     
+        return Basic_User(attrs.get('first_name'),attrs.get('last_name'),attrs.get('email'),attrs.get('phone'),attrs.get('qbuserid'),attrs.get('user_name'),attrs.get('string_home_address'),attrs.get('string_office_address'),attrs.get('home_longitude'),attrs.get('home_latitude'),attrs.get('office_longitude'),attrs.get('office_latitude'),attrs.get('rent_price'),attrs.get('sell_price'))     
 
 
 class BookSerializer(serializers.Serializer):
     #id = serializers.CharField(required=True, max_length=50)
     name = serializers.CharField(required=True, max_length=100)
     author = serializers.CharField(required=True, max_length=200)
-    image = serializers.CharField(required=True, max_length=200)
+    image = serializers.CharField(required=True, max_length=20000)
     rent_price = serializers.CharField(required=False, max_length=200)
     sell_price = serializers.CharField(required=False, max_length=200)
     description = serializers.CharField(required=False, max_length=200)
     published_date = serializers.CharField(required=False, max_length=200)
     status = serializers.CharField(required=False, max_length=200)
+    isbn = serializers.CharField(required=False, max_length=200)
+    category = serializers.CharField(required=False, max_length=200)
     users = Basic_UserSerializer(required=False, many=True)
     
     def restore_object(self, attrs, instance=None):
@@ -61,11 +70,13 @@ class BookSerializer(serializers.Serializer):
             instance.description= attrs.get('description', instance.description)
             instance.published_date= attrs.get('published_date', instance.published_date)
             instance.status= attrs.get('status', instance.status)
+            instance.isbn= attrs.get('isbn', instance.ISBN)
+            instance.category= attrs.get('category', instance.category)
             instance.users= attrs.get('users', instance.users)
             
             return instance
 
-        return Book(attrs.get('name'),attrs.get('description'),attrs.get('published_date'),attrs.get('status'),attrs.get('author'),attrs.get('image'),attrs.get('users'),attrs.get('rent_price'),attrs.get('sell_price'))
+        return Book(attrs.get('name'),attrs.get('description'),attrs.get('published_date'),attrs.get('category'),attrs.get('isbn'),attrs.get('status'),attrs.get('author'),attrs.get('image'),attrs.get('users'),attrs.get('rent_price'),attrs.get('sell_price'))
 
 class UserSerializer(serializers.Serializer):
 
@@ -82,7 +93,9 @@ class UserSerializer(serializers.Serializer):
     phone = serializers.CharField(required=False, max_length=15)
     books = BookSerializer(required=False, many=True)
     borrowed_books = BookSerializer(required=False, many=True)
-    
+    string_home_address = serializers.CharField(required=False, max_length=200)
+    string_office_address = serializers.CharField(required=False, max_length=200)
+    qbuserid = serializers.CharField(required=False, max_length=200)
 
     def restore_object(self, attrs, instance=None):
         if instance:
@@ -99,9 +112,12 @@ class UserSerializer(serializers.Serializer):
             instance.email= attrs.get('email', instance.email)
             instance.phone= attrs.get('phone', instance.phone)
             instance.borrowed_books = attrs.get('borrowed_books', instance.borrowed_books)
+            instance.string_home_address= attrs.get('string_home_address', instance.string_home_address)
+            instance.string_office_address= attrs.get('string_office_address', instance.string_office_address)
+            instance.qbuserid= attrs.get('qbuserid', instance.qbuserid)
             return instance
 
-        return User(attrs.get('first_name'),attrs.get('last_name'),attrs.get('email'),attrs.get('phone'),attrs.get('user_name'),attrs.get('home_longitude'),attrs.get('home_latitude'),attrs.get('office_longitude'),attrs.get('office_latitude'),attrs.get('rent_price'),attrs.get('sell_price'),attrs.get('books'),attrs.get('borrowed_books'))     
+        return User(attrs.get('first_name'),attrs.get('last_name'),attrs.get('email'),attrs.get('phone'),attrs.get('qbuserid'),attrs.get('user_name'),attrs.get('string_home_address'),attrs.get('string_office_address'),attrs.get('home_longitude'),attrs.get('home_latitude'),attrs.get('office_longitude'),attrs.get('office_latitude'),attrs.get('rent_price'),attrs.get('sell_price'),attrs.get('books'),attrs.get('borrowed_books'))     
 """COMMENTED OUT
 class User_having_books_Serializer(serializers.Serializer):
     user_name = serializers.CharField(required=True, max_length=200)

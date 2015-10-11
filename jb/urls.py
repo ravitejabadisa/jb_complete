@@ -18,14 +18,15 @@ from django.contrib import admin
 
 urlpatterns = [
     #url(r'^testbook/$','jbapi.views.testbook'),
-    url(r'^sign_up_and_list_users/$','jbapi.views.sign_up_and_list_users'),
+    url(r'^backend_auth/$','jbapi.views.authenticating'),
+    url(r'^users/$','jbapi.views.sign_up_edit_and_list_users'),
+    url(r'^books/$','jbapi.views.list_search_modify_books'),
     url(r'^perform_exchange/$','jbapi.views.perform_exchange'),
-    url(r'^perform_exchange/$','jbapi.views.perform_exchange'),
-    url(r'^books/$','jbapi.views.listbooks'),
-    url(r'^addbook/$','jbapi.views.addbook'),
-    url(r'^searchbook/$','jbapi.views.searchbook'),
+    
+    #url(r'^addbook/$','jbapi.views.addbook'),
+    #url(r'^searchbook/$','jbapi.views.searchbook'),
     #url(r'^admin/', include(admin.site.urls)),
     #url(r'^', include('jbapi.urls')),
     #url(r'^auth/', include('rest_framework_social_oauth2.urls')),
-    url(r'^backend_auth/$','jbapi.views.authenticating'),
+    #url(r'^conn_test/','jbapi.views.test_connection'),
 ]
